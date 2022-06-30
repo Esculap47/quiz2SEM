@@ -1,0 +1,46 @@
+{% extends 'accs/main.html' %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="form-group row">
+        <div class="container text-center">
+          <form method="POST">
+            {% csrf_token %}
+            <h2 class="my-5">Справка:
+              
+              A — не имею информации;
+
+              B — проявляется всегда;
+              
+              C — проявляется в большинстве случаев;
+              
+              D — проявляется примерно в половине случаев;
+              
+              E — проявляется редко;
+              
+              F — не проявляется никогда.</h2>
+          
+            {% for q in questions %}
+              <h3 class="py-3">{{ q.name }}</h3>
+              <div class="py-3">
+                <select class="form-select" name="{{ q.id }}">
+                  <option value="1">A — не имею информации</option>
+                  <option value="2">B — проявляется всегда;</option>
+                  <option value="3">C — проявляется в большинстве случаев;</option>
+                  <option value="4">D — проявляется примерно в половине случаев;</option>
+                  <option value="5"> E — проявляется редко;</option>
+                  <option value="6">F — не проявляется никогда.</h2></option>
+                </select>
+              </div>
+            {% endfor %}
+
+            <input type="hidden" name="del" value="false">
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block my-4">End Quiz</button>
+        
+          </form>
+        <br><br>
+      </div>
+    </div>
+  </form>
+{% endblock %}

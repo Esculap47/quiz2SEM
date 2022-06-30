@@ -1,0 +1,74 @@
+{% extends 'accs/main.html' %}
+
+{% block content %}
+
+<div class="container text-center my-4">
+    <h1 class="display-4">Results:</h1>
+</div>
+<div class="container text-center my-4">
+  {% if data %}
+    <canvas id="radar-chart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    
+    {% for d in data %}
+        <input id="{{forloop.counter}}" name="{{forloop.counter}}" type="hidden" value="{{ d }}">
+    {% endfor %}
+
+  {% else %}
+    <h2>No data yet!</h2>
+  {% endif %}
+
+  <div class="form-group row">
+    <div class="container text-center">
+      <a href="{% url 'quizs' %}" class="btn btn-primary btn-lg btn-block my-4">Back</a>
+    </div>
+  </div>
+  <br><br>
+</div>
+
+<script>
+    const data = {
+        labels: [
+            'Ориентация на результат, ответственность за него',
+            'Понимание бизнес-среды',
+            'Стремление к общению и навыки коммуникации с людьми в компании',
+            'Обучение',
+            'Мотивирование'
+        ],
+        datasets: [{
+            label: '360 Test Results',
+            data: [
+                parseInt(document.getElementById('1').value),
+                parseInt(document.getElementById('2').value),
+                parseInt(document.getElementById('3').value),
+                parseInt(document.getElementById('4').value),
+                parseInt(document.getElementById('5').value)],
+            fill: true,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgb(255, 99, 132)',
+            pointBackgroundColor: 'rgb(255, 99, 132)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    const config = {
+        type: 'radar',
+        data: data,
+        options: {
+            responsive: true,
+            elements: {
+                line: {
+                    borderWidth: 3
+                }
+            }
+        },
+    };
+
+    window.onload = function() {
+        var ctx = document.getElementById('radar-chart').getContext('2d');
+        window.myRadar = new Chart(ctx, config);
+    };
+</script>
+{% endblock %}

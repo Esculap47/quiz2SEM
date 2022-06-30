@@ -1,0 +1,47 @@
+{% extends 'accs/main.html' %}
+
+{% block content %}
+<div class="container text-center my-4">
+    <h1 class="display-4">Quizs List</h1>
+</div>
+<div class="container text-center my-4">
+  {% if quizs %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Date</th>
+          <th scope="col">User</th>
+          <th scope="col">Results</th>
+        </tr>
+      </thead>
+      <tbody>
+          
+        {% for s in quizs %}
+          <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{s.date_created}}</td>
+              <td>{{s.uname}}</td>
+              <td>{{s.res}}</td>
+              <td>
+                <!-- Call to action buttons -->
+                <a href="{% url 'results' s.id %}" class="view" title="View" data-toggle="tooltip"><i class="material-icons">visibility</i></a>
+                <a href="{% url 'deleteQuiz' s.id %}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+              </td>
+          </tr>
+        {% endfor %}
+              
+      </tbody>
+    </table>
+  {% else %}
+    <h2>No quizs yet. Take one!</h2>
+  {% endif %}
+
+  <div class="form-group row">
+    <div class="container text-center">
+      <a href="{% url 'createQuiz' %}" class="btn btn-primary btn-lg btn-block my-4">Take Quiz!</a>
+    </div>
+  </div>
+  <br><br>
+</div>
+{% endblock %}
